@@ -1,6 +1,5 @@
-package gr.uom.cloud.technologies.repository;
+package gr.uom.cloud.technologies.car;
 
-import gr.uom.cloud.technologies.car.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

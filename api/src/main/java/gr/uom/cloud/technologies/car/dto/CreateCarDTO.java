@@ -1,4 +1,4 @@
-package gr.uom.cloud.technologies.dto.car;
+package gr.uom.cloud.technologies.car.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,5 +13,5 @@ public class CreateCarDTO {
     private Double price;
     private String description;
     private Integer total;
-    private Integer dealershipAfm;
+    private String dealershipAfm;
 }

@@ -1,9 +1,8 @@
 package gr.uom.cloud.technologies.car;
 
 import gr.uom.cloud.technologies.dealership.Dealership;
-import gr.uom.cloud.technologies.dto.car.CreateCarDTO;
-import gr.uom.cloud.technologies.repository.CarRepository;
-import gr.uom.cloud.technologies.repository.DealershipRepository;
+import gr.uom.cloud.technologies.car.dto.CreateCarDTO;
+import gr.uom.cloud.technologies.dealership.DealershipRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 public class CarService {
 
     private final DealershipRepository dealershipRepository;
-
     private final CarRepository carRepository;
 
     @Transactional
