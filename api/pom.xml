@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>gr.uom</groupId>
-	<artifactId>cloud.technologies</artifactId>
+	<artifactId>api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>car.dealership</name>
 	<description>Car dealership project for UOM</description>
