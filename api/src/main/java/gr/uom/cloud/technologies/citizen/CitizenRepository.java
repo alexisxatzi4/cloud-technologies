@@ -8,4 +8,6 @@ public interface CitizenRepository extends JpaRepository<Citizen, String> {
 
     Citizen findByAfm(String afm);
 
+    Citizen findByEmailAndPassword(String email, String password);
+
 }

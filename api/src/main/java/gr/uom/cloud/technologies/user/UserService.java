@@ -4,6 +4,7 @@ import gr.uom.cloud.technologies.citizen.Citizen;
 import gr.uom.cloud.technologies.citizen.CitizenRepository;
 import gr.uom.cloud.technologies.dealership.Dealership;
 import gr.uom.cloud.technologies.dealership.DealershipRepository;
+import gr.uom.cloud.technologies.user.dto.LoginDto;
 import gr.uom.cloud.technologies.user.dto.RegisterCitizenDto;
 import gr.uom.cloud.technologies.user.dto.RegisterDealershipDto;
 import jakarta.transaction.Transactional;
@@ -52,5 +53,16 @@ public class UserService {
         citizenRepository.save(citizen);
     }
 
+    @Transactional
+    public void login(LoginDto request) {
+        Citizen citizen = citizenRepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
 
+        if (citizen == null) {
+            Dealership dealership = dealershipRepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
+
+            if (dealership == null) {
+                throw new RuntimeException("Wrong credentials");
+            }
+        }
+    }
 }

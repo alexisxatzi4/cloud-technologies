@@ -1,5 +1,6 @@
 package gr.uom.cloud.technologies.user;
 
+import gr.uom.cloud.technologies.user.dto.LoginDto;
 import gr.uom.cloud.technologies.user.dto.RegisterCitizenDto;
 import gr.uom.cloud.technologies.user.dto.RegisterDealershipDto;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,12 @@ public class UserController {
         userService.registerCitizen(request);
 
         return ResponseEntity.ok("Citizen registered successfully.");
+    }
+
+    @PostMapping("login")
+    public ResponseEntity<String> login(@RequestBody LoginDto request) {
+        userService.login(request);
+
+        return ResponseEntity.ok("Logged in successfully");
     }
 }

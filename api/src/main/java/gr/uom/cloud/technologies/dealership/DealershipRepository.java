@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DealershipRepository extends JpaRepository<Dealership, String> {
     Dealership findByAfm(String afm);
+
+    Dealership findByEmailAndPassword(String email, String password);
+
 }
