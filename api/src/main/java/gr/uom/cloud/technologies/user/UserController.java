@@ -1,18 +1,17 @@
 package gr.uom.cloud.technologies.user;
 
 import gr.uom.cloud.technologies.user.dto.LoginDto;
+import gr.uom.cloud.technologies.user.dto.LoginResponseDto;
 import gr.uom.cloud.technologies.user.dto.RegisterCitizenDto;
 import gr.uom.cloud.technologies.user.dto.RegisterDealershipDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class UserController {
 
     private final UserService userService;
@@ -32,9 +31,9 @@ public class UserController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<String> login(@RequestBody LoginDto request) {
-        userService.login(request);
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginDto request) {
+        LoginResponseDto response = userService.login(request);
 
-        return ResponseEntity.ok("Logged in successfully");
+        return ResponseEntity.ok(response);
     }
 }

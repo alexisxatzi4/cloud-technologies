@@ -5,6 +5,7 @@ import gr.uom.cloud.technologies.citizen.CitizenRepository;
 import gr.uom.cloud.technologies.dealership.Dealership;
 import gr.uom.cloud.technologies.dealership.DealershipRepository;
 import gr.uom.cloud.technologies.user.dto.LoginDto;
+import gr.uom.cloud.technologies.user.dto.LoginResponseDto;
 import gr.uom.cloud.technologies.user.dto.RegisterCitizenDto;
 import gr.uom.cloud.technologies.user.dto.RegisterDealershipDto;
 import jakarta.transaction.Transactional;
@@ -54,15 +55,26 @@ public class UserService {
     }
 
     @Transactional
-    public void login(LoginDto request) {
+    public LoginResponseDto login(LoginDto request) {
         Citizen citizen = citizenRepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
 
-        if (citizen == null) {
-            Dealership dealership = dealershipRepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
-
-            if (dealership == null) {
-                throw new RuntimeException("Wrong credentials");
-            }
+        if (citizen != null) {
+            LoginResponseDto response = new LoginResponseDto();
+            response.setAfm(citizen.getAfm());
+            response.setCitizen(true);
+            response.setName(citizen.getFirstName() + " " + citizen.getLastName());
+            return response;
         }
+
+        Dealership dealership = dealershipRepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
+        if (dealership != null) {
+            LoginResponseDto response = new LoginResponseDto();
+            response.setAfm(dealership.getAfm());
+            response.setCitizen(false);
+            response.setName(dealership.getName());
+            return response;
+        }
+
+        throw new RuntimeException("Wrong credentials");
     }
 }

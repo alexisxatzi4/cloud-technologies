@@ -1,0 +1,59 @@
+.global {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  padding: 1em
+}
+
+.title {
+  padding-left: 10px;
+}
+
+ul.navigation-bar {
+  background-color: #111;
+  padding: 0;
+  display: flex;
+  justify-content: space-between; /* Pushes left and right sections apart */
+  align-items: center;
+}
+
+ul.navigation-bar li {
+  display: inline;
+  list-style-type: none;
+  margin: 0;
+}
+
+ul.navigation-bar li a {
+  color: #FFF;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 20px;
+  display: inline-block;
+}
+
+/* Optional: Add hover effect */
+ul.navigation-bar li a:hover {
+  background-color: #575757;
+}
+
+.table-row {
+  width: 20%;
+}
+
+
+.page-title {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #f2f2f2;
+  font-weight: 300;
+}
+
+
+.custom-icon {
+    color: #116AAB;
+    font-size: 1.3rem;
+}
