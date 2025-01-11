@@ -1,10 +1,12 @@
 package gr.uom.cloud.technologies.car.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Setter @Getter
+@Data
+@AllArgsConstructor
 public class GetCarDTO {
+    private Long id;
     private String make;
     private String model;
     private String fuel;
