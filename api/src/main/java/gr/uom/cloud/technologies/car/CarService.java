@@ -4,11 +4,11 @@ import gr.uom.cloud.technologies.car.dto.GetCarDTO;
 import gr.uom.cloud.technologies.dealership.Dealership;
 import gr.uom.cloud.technologies.car.dto.CreateCarDTO;
 import gr.uom.cloud.technologies.dealership.DealershipRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -34,6 +34,7 @@ public class CarService {
         car.setPrice(createCarDTO.getPrice());
         car.setDescription(createCarDTO.getDescription());
         car.setTotal(createCarDTO.getTotal());
+        car.setCreatedAt(LocalDateTime.now());
 
         Dealership dealership = dealershipRepository.findByAfm(createCarDTO.getDealershipAfm());
 

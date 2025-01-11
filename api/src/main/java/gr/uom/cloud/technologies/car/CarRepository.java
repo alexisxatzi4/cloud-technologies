@@ -17,7 +17,9 @@ public interface CarRepository extends JpaRepository<Car, Long> {
             "(:engine IS NULL OR c.engine = :engine) AND " +
             "(:seats IS NULL OR c.seats = :seats) AND " +
             "(:price IS NULL OR c.price = :price) AND " +
-            "(:dealershipAfm IS NULL OR c.dealership.afm = :dealershipAfm)")
+            "(:dealershipAfm IS NULL OR c.dealership.afm = :dealershipAfm) " +
+           "order by c.createdAt desc "
+    )
     List<Car> filterCars(
             @Param("make") String make,
             @Param("model") String model,

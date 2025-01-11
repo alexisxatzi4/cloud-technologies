@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootApplication
@@ -24,6 +25,8 @@ public class Application {
 
 	@PostConstruct
 	void init() {
+		LocalDateTime now = LocalDateTime.now();
+
 		Dealership dealership1 = new Dealership();
 		dealership1.setAfm("123456789");
 		dealership1.setEmail("alex@gmail.com");
@@ -50,6 +53,7 @@ public class Application {
 		car1.setDescription("Best vehicle");
 		car1.setTotal(19);
 		car1.setDealership(dealership1);
+		car1.setCreatedAt(now);
 
 		Car car2 = new Car();
 		car2.setMake("Opel");
@@ -61,6 +65,7 @@ public class Application {
 		car2.setDescription("Good choice");
 		car2.setTotal(56);
 		car2.setDealership(dealership1);
+		car2.setCreatedAt(now);
 
 		Car car3 = new Car();
 		car3.setMake("BMW");
@@ -71,7 +76,8 @@ public class Application {
 		car3.setPrice(29800.0);
 		car3.setDescription("Speed car");
 		car3.setTotal(2);
-		car3.setDealership(dealership1);
+		car3.setDealership(dealership2);
+		car3.setCreatedAt(now);
 
 		carRepository.saveAll(List.of(car1, car2, car3));
 	}

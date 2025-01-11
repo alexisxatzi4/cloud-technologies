@@ -5,6 +5,7 @@ import gr.uom.cloud.technologies.reservation.Reservation;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class Car {
     private double price;
     private String description;
     private int total;
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name="dealership_afm", nullable=false)
