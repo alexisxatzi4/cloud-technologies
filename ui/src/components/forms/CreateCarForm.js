@@ -1,10 +1,10 @@
 import {Form} from "react-bootstrap"
 import {Button} from "react-bootstrap"
 import {useForm} from "react-hook-form";
-import { axiosPost} from "../../lib/axios";
+import {axiosPost} from "../../lib/axios";
 import {positiveNumberRules, requiredRules} from "../../lib/functions";
 import {
-CREATE_CAR_URL
+  CREATE_CAR_URL
 } from "../../lib/url/apiUrlConstants";
 import {useNavigate} from 'react-router-dom';
 import useCatch from "../../hooks/useCatch";
@@ -13,17 +13,8 @@ import {CARS_PAGE_URL} from "../../lib/url/pageUrlConstants";
 import "react-datepicker/dist/react-datepicker.css";
 import useUserData from "../../hooks/useUserData";
 
-const initialData = {
-  name: '',
-  dateOfBirth: '',
-  car: false,
-  xcoordinate: '',
-  ycoordinate: '',
-  selectedAttributes: ''
-}
-
 export default function CreateCarForm() {
-  const {register, handleSubmit, formState: {errors}} = useForm({defaultValues: initialData});
+  const {register, handleSubmit, formState: {errors}} = useForm();
   const navigate = useNavigate();
   const {cWrapper} = useCatch()
   const {setAlert} = useAlert()

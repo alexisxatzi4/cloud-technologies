@@ -54,6 +54,7 @@ export default function CarsTable() {
           <Column field="seats" header="Seats" className='table-row'></Column>
           <Column field="price" header="Price" className='table-row'></Column>
           <Column field="description" header="Description" className='table-row'></Column>
+          <Column field="total" header="# of Cars" className='table-row'></Column>
           <Column field="actions" header="Actions" className='table-row' body={actionsColumnBody}></Column>
         </DataTable>
       </div>
