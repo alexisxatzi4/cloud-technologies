@@ -7,6 +7,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -41,5 +42,9 @@ public class CarService {
         car.setDealership(dealership);
 
         return car;
+    }
+
+    public List<Car> getAllCars() {
+        return carRepository.findAll();
     }
 }
