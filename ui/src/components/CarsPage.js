@@ -1,11 +1,10 @@
 import {Link} from "react-router-dom";
 import {Button} from "react-bootstrap";
-import {SAVE_EMPLOYEES_PAGE_URL} from "../lib/url/pageUrlConstants";
-import EmployeesTable from "./tables/EmployeesTable";
+import {CREATE_CAR_PAGE_URL} from "../lib/url/pageUrlConstants";
 import CarsTable from "./tables/CarsTable";
 import useUserData from "../hooks/useUserData";
 
-export default function Cars() {
+export default function CarsPage() {
   const {user} = useUserData()
 
   return (
@@ -15,7 +14,7 @@ export default function Cars() {
       {
         user ?
           <>
-            <Link className='mb-3' to={SAVE_EMPLOYEES_PAGE_URL}>
+            <Link className='mb-3' to={CREATE_CAR_PAGE_URL}>
               <Button>Add Car</Button>
             </Link>
             <CarsTable/>

@@ -8,7 +8,7 @@ import { GET_CARS_URL} from '../../lib/url/apiUrlConstants';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { useAlert } from '../utils/GlobalAlert';
-import { SAVE_ATTRIBUTE_PAGE_URL } from '../../lib/url/pageUrlConstants';
+import {CREATE_CAR_PAGE_URL} from '../../lib/url/pageUrlConstants';
 import useCatch from '../../hooks/useCatch';
 
 export default function CarsTable() {
@@ -23,7 +23,7 @@ export default function CarsTable() {
   const actionsColumnBody = (rowData) => {
     return (
       <>
-        <Link to={SAVE_ATTRIBUTE_PAGE_URL} state={{ id: rowData.id }}>
+        <Link to={CREATE_CAR_PAGE_URL} state={{ id: rowData.id }}>
           <i className="bi bi-pencil custom-icon mr-3" title='Edit' />
         </Link>
 

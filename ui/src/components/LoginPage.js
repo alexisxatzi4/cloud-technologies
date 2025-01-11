@@ -41,31 +41,34 @@ export default function LoginPage() {
   }
 
   return (
-    <Form id='registerForm' onSubmit={handleSubmit(onSubmit)}>
-      <h1 className='page-title'>Login</h1>
-      <Form.Group>
-        <Form.Label>Email</Form.Label>
-        <Form.Control
-          type='text'
-          placeholder='Enter email'
-          {...register("email", requiredRules)}
-        />
-        {errors.email && <small className='text-danger'>{errors.email.message}</small>}
-      </Form.Group>
+    <Form className='form' onSubmit={handleSubmit(onSubmit)}>
+      <div className='form-content'>
 
-      <Form.Group className='mt-3'>
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          type='password'
-          placeholder='Enter password'
-          {...register("password", requiredRules)}
-        />
-        {errors.password && <small className='text-danger'>{errors.password.message}</small>}
-      </Form.Group>
+        <h1 className='page-title'>Login</h1>
+        <Form.Group>
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Enter email'
+            {...register("email", requiredRules)}
+          />
+          {errors.email && <small className='text-danger'>{errors.email.message}</small>}
+        </Form.Group>
 
-      <Button type='submit' className='btn btn-primary mt-3'>
-        Login
-      </Button>
+        <Form.Group className='mt-3'>
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type='password'
+            placeholder='Enter password'
+            {...register("password", requiredRules)}
+          />
+          {errors.password && <small className='text-danger'>{errors.password.message}</small>}
+        </Form.Group>
+
+        <Button type='submit' className='btn btn-primary mt-3'>
+          Login
+        </Button>
+      </div>
     </Form>
-  )
+)
 }

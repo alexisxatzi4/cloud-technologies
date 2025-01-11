@@ -79,114 +79,116 @@ export default function RegisterPage() {
         })
     )
   }
-  console.log('errors ', errors)
 
   return (
-    <Form id="registerForm" onSubmit={handleSubmit(onSubmit)}>
-      <h1 className="page-title">Register</h1>
+    <Form className='form' onSubmit={handleSubmit(onSubmit)}>
+      <div className='form-content'>
 
-      {/* User Type Selection */}
-      <Form.Group>
-        <Form.Label>Register as</Form.Label>
-        <Form.Select {...register("userType")}>
-          <option value="citizen">Citizen</option>
-          <option value="dealership">Car Dealership</option>
-        </Form.Select>
-      </Form.Group>
+        <h1 className="page-title">Register</h1>
 
-      {/* Common Fields */}
-      <Form.Group className="mt-3">
-        <Form.Label>Name</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter your AFM"
-          {...register("afm", requiredRules)}
-        />
-        {errors.afm && <small className="text-danger">{errors.afm.message}</small>}
-      </Form.Group>
+        {/* User Type Selection */}
+        <Form.Group>
+          <Form.Label>Register as</Form.Label>
+          <Form.Select {...register("userType")}>
+            <option value="citizen">Citizen</option>
+            <option value="dealership">Car Dealership</option>
+          </Form.Select>
+        </Form.Group>
 
-      <Form.Group className="mt-3">
-        <Form.Label>Email</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter your email"
-          {...register("email", requiredRules)}
-        />
-        {errors.email && <small className="text-danger">{errors.email.message}</small>}
-      </Form.Group>
+        {/* Common Fields */}
+        <Form.Group className="mt-3">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter your AFM"
+            {...register("afm", requiredRules)}
+          />
+          {errors.afm && <small className="text-danger">{errors.afm.message}</small>}
+        </Form.Group>
 
-      <Form.Group className="mt-3">
-        <Form.Label>Password</Form.Label>
-        <Form.Control
-          type="password"
-          placeholder="Enter your password"
-          {...register("password", requiredRules)}
-        />
-        {errors.password && <small className="text-danger">{errors.password.message}</small>}
-      </Form.Group>
+        <Form.Group className="mt-3">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter your email"
+            {...register("email", requiredRules)}
+          />
+          {errors.email && <small className="text-danger">{errors.email.message}</small>}
+        </Form.Group>
 
-      {/* Conditional Fields for Car Dealership */}
-      {userType === "dealership" && (
-        <>
-          <Form.Group className="mt-3">
-            <Form.Label>Dealership Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter dealership name"
-              {...register("dealershipName", requiredRules)}
-            />
-            {errors.dealershipName && (
-              <small className="text-danger">{errors.dealershipName.message}</small>
-            )}
-          </Form.Group>
+        <Form.Group className="mt-3">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Enter your password"
+            {...register("password", requiredRules)}
+          />
+          {errors.password && <small className="text-danger">{errors.password.message}</small>}
+        </Form.Group>
 
-          <Form.Group className="mt-3">
-            <Form.Label>Owner</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter owner"
-              {...register("owner", requiredRules)}
-            />
-            {errors.owner && (
-              <small className="text-danger">{errors.owner.message}</small>
-            )}
-          </Form.Group>
-        </>
-      )}
-
-      {
-        userType === "citizen" && (
+        {/* Conditional Fields for Car Dealership */}
+        {userType === "dealership" && (
           <>
             <Form.Group className="mt-3">
-              <Form.Label>First Name</Form.Label>
+              <Form.Label>Dealership Name</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter your first name"
-                {...register("firstName", requiredRules)}
+                placeholder="Enter dealership name"
+                {...register("dealershipName", requiredRules)}
               />
-              {errors.firstName && (
-                <small className="text-danger">{errors.firstName.message}</small>
+              {errors.dealershipName && (
+                <small className="text-danger">{errors.dealershipName.message}</small>
               )}
             </Form.Group>
 
             <Form.Group className="mt-3">
-              <Form.Label>Last name</Form.Label>
+              <Form.Label>Owner</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter your last name"
-                {...register("lastName", requiredRules)}
+                placeholder="Enter owner"
+                {...register("owner", requiredRules)}
               />
-              {errors.lastName && (
-                <small className="text-danger">{errors.lastName.message}</small>
+              {errors.owner && (
+                <small className="text-danger">{errors.owner.message}</small>
               )}
             </Form.Group>
           </>
-        )
-      }
+        )}
 
-      <Button type="submit" className="btn btn-primary mt-3">
-        Register
-      </Button>
+        {
+          userType === "citizen" && (
+            <>
+              <Form.Group className="mt-3">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your first name"
+                  {...register("firstName", requiredRules)}
+                />
+                {errors.firstName && (
+                  <small className="text-danger">{errors.firstName.message}</small>
+                )}
+              </Form.Group>
+
+              <Form.Group className="mt-3">
+                <Form.Label>Last name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your last name"
+                  {...register("lastName", requiredRules)}
+                />
+                {errors.lastName && (
+                  <small className="text-danger">{errors.lastName.message}</small>
+                )}
+              </Form.Group>
+            </>
+          )
+        }
+
+        <Button type="submit" className="btn btn-primary mt-3">
+          Register
+        </Button>
+      </div>
     </Form>
-  );
+);
 }
