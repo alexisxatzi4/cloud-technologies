@@ -2,6 +2,8 @@ package gr.uom.cloud.technologies;
 
 import gr.uom.cloud.technologies.car.Car;
 import gr.uom.cloud.technologies.car.CarRepository;
+import gr.uom.cloud.technologies.citizen.Citizen;
+import gr.uom.cloud.technologies.citizen.CitizenRepository;
 import gr.uom.cloud.technologies.dealership.Dealership;
 import gr.uom.cloud.technologies.dealership.DealershipRepository;
 import jakarta.annotation.PostConstruct;
@@ -18,6 +20,7 @@ public class Application {
 
 	private final DealershipRepository dealershipRepository;
 	private final CarRepository carRepository;
+	private final CitizenRepository citizenRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -80,5 +83,14 @@ public class Application {
 		car3.setCreatedAt(now);
 
 		carRepository.saveAll(List.of(car1, car2, car3));
+
+		Citizen citizen = new Citizen();
+		citizen.setAfm("252525255");
+		citizen.setEmail("alex@email.com");
+		citizen.setFirstName("Alex");
+		citizen.setLastName("Chatz");
+		citizen.setPassword("123");
+
+		citizenRepository.save(citizen);
 	}
 }
