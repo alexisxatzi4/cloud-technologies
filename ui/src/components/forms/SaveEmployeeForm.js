@@ -2,7 +2,7 @@ import { Form } from "react-bootstrap"
 import { Button } from "react-bootstrap"
 import { useForm, Controller } from "react-hook-form";
 import { axiosGet, axiosPost, axiosPut } from "../../lib/axios";
-import { textRequiredRules } from "../../lib/functions";
+import { requiredRules } from "../../lib/functions";
 import { POST_EMPLOYEES_URL, GET_EMPLOYEE_URL, PUT_EMPLOYEE_URL, GET_ATTRIBUTES_URL } from "../../lib/url/apiUrlConstants";
 import { useNavigate } from 'react-router-dom';
 import useCatch from "../../hooks/useCatch";
@@ -113,7 +113,7 @@ export default function SaveEmployeeForm() {
                     type='text'
                     name='name'
                     placeholder='Enter name'
-                    {...register("name", textRequiredRules)}
+                    {...register("name", requiredRules)}
                 />
                 {errors.name && <small className='text-danger'>{errors.name.message}</small>}
             </Form.Group>
@@ -162,7 +162,7 @@ export default function SaveEmployeeForm() {
                     type='text'
                     name='xcoordinate'
                     placeholder='Enter X Coordinate'
-                    {...register("xcoordinate", textRequiredRules)}
+                    {...register("xcoordinate", requiredRules)}
                 />
                 {errors.xcoordinate && <small className='text-danger'>{errors.xcoordinate.message}</small>}
             </Form.Group>
@@ -173,7 +173,7 @@ export default function SaveEmployeeForm() {
                     type='text'
                     name='ycoordinate'
                     placeholder='Enter Y Coordinate'
-                    {...register("ycoordinate", textRequiredRules)}
+                    {...register("ycoordinate", requiredRules)}
                 />
                 {errors.ycoordinate && <small className='text-danger'>{errors.ycoordinate.message}</small>}
             </Form.Group>

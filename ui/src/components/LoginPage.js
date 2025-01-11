@@ -1,14 +1,13 @@
 import {Button, Form} from "react-bootstrap";
-import {textRequiredRules} from "../../lib/functions";
+import {requiredRules} from "../lib/functions";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
-import useCatch from "../../hooks/useCatch";
-import {useAlert} from "../utils/GlobalAlert";
-import {axiosPost} from "../../lib/axios";
-import {POST_LOGIN_URL} from "../../lib/url/apiUrlConstants";
-import {setItem} from "../../lib/storage";
-import useUserData from "../../hooks/useUserData";
-import {CARS_PAGE_URL} from "../../lib/url/pageUrlConstants";
+import useCatch from "../hooks/useCatch";
+import {useAlert} from "./utils/GlobalAlert";
+import {axiosPost} from "../lib/axios";
+import {POST_LOGIN_URL} from "../lib/url/apiUrlConstants";
+import {setItem} from "../lib/storage";
+import {CARS_PAGE_URL} from "../lib/url/pageUrlConstants";
 
 const initialData = {
   email: '',
@@ -49,7 +48,7 @@ export default function LoginPage() {
         <Form.Control
           type='text'
           placeholder='Enter email'
-          {...register("email", textRequiredRules)}
+          {...register("email", requiredRules)}
         />
         {errors.email && <small className='text-danger'>{errors.email.message}</small>}
       </Form.Group>
@@ -59,7 +58,7 @@ export default function LoginPage() {
         <Form.Control
           type='password'
           placeholder='Enter password'
-          {...register("password", textRequiredRules)}
+          {...register("password", requiredRules)}
         />
         {errors.password && <small className='text-danger'>{errors.password.message}</small>}
       </Form.Group>

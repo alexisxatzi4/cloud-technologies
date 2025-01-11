@@ -9,8 +9,8 @@ import {
   SAVE_EMPLOYEES_PAGE_URL, LOGIN_PAGE_URL, REGISTER_PAGE_URL, CARS_PAGE_URL
 } from "../../lib/url/pageUrlConstants"
 import SaveEmployeeForm from "../forms/SaveEmployeeForm"
-import LoginPage from "../forms/LoginPage";
-import RegisterForm from "../forms/RegisterForm";
+import LoginPage from "../LoginPage";
+import RegisterPage from "../RegisterPage";
 import Cars from "../Cars";
 
 export default function Body() {
@@ -26,7 +26,7 @@ export default function Body() {
         <Route path={CARS_PAGE_URL} element={<Cars/>}/>
 
 
-        <Route exact path={REGISTER_PAGE_URL} element={<RegisterForm/>}/>
+        <Route exact path={REGISTER_PAGE_URL} element={<RegisterPage/>}/>
         <Route exact path={LOGIN_PAGE_URL} element={<LoginPage/>}/>
       </Routes>
     </div>

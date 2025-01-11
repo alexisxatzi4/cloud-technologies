@@ -2,7 +2,7 @@ import { Form } from "react-bootstrap"
 import { Button } from "react-bootstrap"
 import { useForm } from "react-hook-form";
 import { axiosGet, axiosPost, axiosPut } from "../../lib/axios";
-import { textRequiredRules } from "../../lib/functions";
+import { requiredRules } from "../../lib/functions";
 import { POST_ATTRIBUTES_URL, GET_ATTRIBUTE_URL, PUT_ATTRIBUTE_URL } from "../../lib/url/apiUrlConstants";
 import { useNavigate } from 'react-router-dom';
 import useCatch from "../../hooks/useCatch";
@@ -94,7 +94,7 @@ export default function SaveAttributeForm() {
                     name='name'
                     placeholder='Enter name'
                     disabled={mode !== 'add'}
-                    {...register("name", textRequiredRules)}
+                    {...register("name", requiredRules)}
                 />
                 {errors.name && <small className='text-danger'>{errors.name.message}</small>}
             </Form.Group>
@@ -105,7 +105,7 @@ export default function SaveAttributeForm() {
                     type='text'
                     name='value'
                     placeholder='Enter value'
-                    {...register("value", textRequiredRules)}
+                    {...register("value", requiredRules)}
                 />
                 {errors.value && <small className='text-danger'>{errors.value.message}</small>}
             </Form.Group>
