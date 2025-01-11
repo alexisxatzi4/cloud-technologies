@@ -97,7 +97,7 @@ export default function RegisterPage() {
 
         {/* Common Fields */}
         <Form.Group className="mt-3">
-          <Form.Label>Name</Form.Label>
+          <Form.Label>AFM</Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter your AFM"

@@ -38,7 +38,7 @@ public class CarService {
         Dealership dealership = dealershipRepository.findByAfm(createCarDTO.getDealershipAfm());
 
         if (dealership == null) {
-            throw new EntityNotFoundException("Dealership with AFM " + createCarDTO.getDealershipAfm() + " not found");
+            throw new RuntimeException("Dealership with AFM " + createCarDTO.getDealershipAfm() + " not found");
         }
 
         car.setDealership(dealership);
