@@ -1,53 +1,29 @@
 package gr.uom.cloud.technologies.reservation;
 
-import java.time.LocalDate;
+import gr.uom.cloud.technologies.car.Car;
+import gr.uom.cloud.technologies.citizen.Citizen;
+import jakarta.persistence.*;
+import lombok.Data;
 
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "reservations")
+@Data
 public class Reservation {
-    private String citizen;
-    private String car;
-    private LocalDate reservationDate;
-    private int reservationTime;
 
-    public Reservation() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Citizen citizen;
 
-    public Reservation(String citizen, String car, LocalDate reservationDate, int reservationTime) {
-        this.citizen = citizen;
-        this.car = car;
-        this.reservationDate = reservationDate;
-        this.reservationTime = reservationTime;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Car car;
 
-    public String getCitizen() {
-        return citizen;
-    }
+    private LocalDateTime reservationDate;
 
-    public void setCitizen(String citizen) {
-        this.citizen = citizen;
-    }
+    private int reservationTimeInMinutes;
 
-    public String getCar() {
-        return car;
-    }
-
-    public void setCar(String car) {
-        this.car = car;
-    }
-
-    public LocalDate getReservationDate() {
-        return reservationDate;
-    }
-
-    public void setReservationDate(LocalDate reservationDate) {
-        this.reservationDate = reservationDate;
-    }
-
-    public int getReservationTime() {
-        return reservationTime;
-    }
-
-    public void setReservationTime(int reservationTime) {
-        this.reservationTime = reservationTime;
-    }
 }
