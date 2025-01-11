@@ -2,8 +2,9 @@ package gr.uom.cloud.technologies.car;
 
 import gr.uom.cloud.technologies.car.dto.CreateCarDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/cars")
@@ -15,5 +16,10 @@ public class CarController {
     @PostMapping
     public void createCar(@RequestBody CreateCarDTO createCarDTO) {
         carService.createCar(createCarDTO);
+    }
+
+    @GetMapping
+    public List<Car> getAllCars(){
+        return carService.getAllCars();
     }
 }
