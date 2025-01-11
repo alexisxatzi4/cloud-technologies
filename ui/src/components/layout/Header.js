@@ -25,9 +25,6 @@ export default function Header() {
       <h1 className="title">Car Dealership</h1>
       <ul className="navigation-bar">
         {user && <div className="left-nav">
-          <li><Link to={ATTRIBUTES_PAGE_URL}>Attributes</Link></li>
-          <li><Link to={EMPLOYEES_PAGE_URL}>Employees</Link></li>
-
           <li><Link to={CARS_PAGE_URL}>Cars</Link></li>
         </div>}
 

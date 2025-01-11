@@ -29,14 +29,14 @@ public class Application {
 		dealership1.setEmail("alex@gmail.com");
 		dealership1.setName("AutoWorld");
 		dealership1.setOwner("Alex");
-		dealership1.setPassword("password123");
+		dealership1.setPassword("123");
 
 		Dealership dealership2 = new Dealership();
 		dealership2.setAfm("987654321");
 		dealership2.setEmail("aris@gmail.com");
 		dealership2.setName("CarMax");
 		dealership2.setOwner("Aris");
-		dealership2.setPassword("password456");
+		dealership2.setPassword("123");
 
 		dealershipRepository.saveAll(List.of(dealership1, dealership2));
 

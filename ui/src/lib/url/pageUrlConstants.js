@@ -8,6 +8,7 @@ export const SAVE_EMPLOYEES_PAGE_URL = "/employees/save"
 
 
 export const CARS_PAGE_URL = "/cars"
+export const SAVE_CARS_PAGE_URL = "/cars/save"
 
 
 export const LOGIN_PAGE_URL = "/login"
