@@ -7,6 +7,8 @@ import {useAlert} from "../utils/GlobalAlert";
 import {axiosPost} from "../../lib/axios";
 import {POST_LOGIN_URL} from "../../lib/url/apiUrlConstants";
 import {setItem} from "../../lib/storage";
+import useUserData from "../../hooks/useUserData";
+import {CARS_PAGE_URL} from "../../lib/url/pageUrlConstants";
 
 const initialData = {
   email: '',
@@ -20,16 +22,15 @@ export default function LoginPage() {
   const {setAlert} = useAlert()
 
   const onSubmit = (data) => {
-    console.log('data ', data)
     cWrapper(() =>
       axiosPost(POST_LOGIN_URL, data)
 
         .then((response) => {
           const user = response.data
 
-          setItem("user", user)
+          setItem('user', user)
 
-          // navigate(CARS_PAGE_URL)
+          navigate(CARS_PAGE_URL)
 
           setAlert({
             message: 'Logged in!',

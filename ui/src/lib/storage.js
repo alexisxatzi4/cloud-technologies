@@ -6,11 +6,11 @@ export const setItem = (key, data) => {
 
 export const getItem = (key) => {
   if (typeof window !== 'undefined') {
-    localStorage.getItem(key)
+     return localStorage.getItem(key)
   }
 }
 
-export const clearItem = (key) => {
+export const removeItem = (key) => {
   if (typeof window !== 'undefined') {
     localStorage.removeItem(key)
   }

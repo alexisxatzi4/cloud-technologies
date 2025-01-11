@@ -6,11 +6,12 @@ import {
   SAVE_ATTRIBUTE_PAGE_URL,
   ATTRIBUTES_PAGE_URL,
   EMPLOYEES_PAGE_URL,
-  SAVE_EMPLOYEES_PAGE_URL, LOGIN_PAGE_URL, REGISTER_PAGE_URL
+  SAVE_EMPLOYEES_PAGE_URL, LOGIN_PAGE_URL, REGISTER_PAGE_URL, CARS_PAGE_URL
 } from "../../lib/url/pageUrlConstants"
 import SaveEmployeeForm from "../forms/SaveEmployeeForm"
 import LoginPage from "../forms/LoginPage";
 import RegisterForm from "../forms/RegisterForm";
+import Cars from "../Cars";
 
 export default function Body() {
 
@@ -21,6 +22,8 @@ export default function Body() {
         <Route path={SAVE_ATTRIBUTE_PAGE_URL} element={<SaveAttributeForm/>}/>
         <Route path={EMPLOYEES_PAGE_URL} element={<Employees/>}/>
         <Route path={SAVE_EMPLOYEES_PAGE_URL} element={<SaveEmployeeForm/>}/>
+
+        <Route path={CARS_PAGE_URL} element={<Cars/>}/>
 
 
         <Route exact path={REGISTER_PAGE_URL} element={<RegisterForm/>}/>
