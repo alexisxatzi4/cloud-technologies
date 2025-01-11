@@ -15,7 +15,7 @@ export default function CarsPage() {
         user ?
           <>
             <Link className='mb-3' to={CREATE_CAR_PAGE_URL}>
-              <Button>Add Car</Button>
+              <Button>Create Car</Button>
             </Link>
             <CarsTable/>
           </>

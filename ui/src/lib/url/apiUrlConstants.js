@@ -13,6 +13,7 @@ export const POST_EMPLOYEES_URL = `${BASE_URL}/employees`
 export const PUT_EMPLOYEE_URL = (id) => `${BASE_URL}/employees/${id}`
 
 export const GET_CARS_URL = `${BASE_URL}/cars`
+export const CREATE_CAR_URL = `${BASE_URL}/cars`
 
 export const POST_LOGIN_URL = `${BASE_URL}/users/login`
 export const POST_REGISTER_CITIZEN_URL = `${BASE_URL}/users/citizens`

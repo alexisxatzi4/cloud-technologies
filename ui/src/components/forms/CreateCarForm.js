@@ -1,23 +1,17 @@
 import {Form} from "react-bootstrap"
 import {Button} from "react-bootstrap"
-import {useForm, Controller} from "react-hook-form";
-import {axiosGet, axiosPost, axiosPut} from "../../lib/axios";
+import {useForm} from "react-hook-form";
+import { axiosPost} from "../../lib/axios";
 import {positiveNumberRules, requiredRules} from "../../lib/functions";
 import {
-  POST_EMPLOYEES_URL,
-  GET_EMPLOYEE_URL,
-  PUT_EMPLOYEE_URL,
-  GET_ATTRIBUTES_URL
+CREATE_CAR_URL
 } from "../../lib/url/apiUrlConstants";
 import {useNavigate} from 'react-router-dom';
 import useCatch from "../../hooks/useCatch";
 import {useAlert} from "../utils/GlobalAlert";
-import {useLocation} from "react-router-dom";
-import {useEffect, useState} from "react";
-import DatePicker from 'react-datepicker'
-import {EMPLOYEES_PAGE_URL} from "../../lib/url/pageUrlConstants";
+import {CARS_PAGE_URL} from "../../lib/url/pageUrlConstants";
 import "react-datepicker/dist/react-datepicker.css";
-import Select from 'react-select'
+import useUserData from "../../hooks/useUserData";
 
 const initialData = {
   name: '',
@@ -29,52 +23,27 @@ const initialData = {
 }
 
 export default function CreateCarForm() {
-  const {register, handleSubmit, reset, control, formState: {errors}} = useForm({defaultValues: initialData});
+  const {register, handleSubmit, formState: {errors}} = useForm({defaultValues: initialData});
   const navigate = useNavigate();
   const {cWrapper} = useCatch()
   const {setAlert} = useAlert()
-  const location = useLocation()
-  const [mode, setMode] = useState('add')
-  const [attributes, setAttributes] = useState(null)
-
-  const createEmployee = (data) => {
-    // data['attributes'] = data.selectedAttributes.map(it => it.value)
-    //
-    // cWrapper(() =>
-    //     axiosPost(POST_EMPLOYEES_URL, data)
-    //         .then(() => {
-    //             navigate(EMPLOYEES_PAGE_URL)
-    //
-    //             setAlert({
-    //                 message: 'Employee added',
-    //                 status: 'success'
-    //             })
-    //         })
-    // )
-  }
-
-  const editEmployee = (data) => {
-    // data['id']= location.state.id
-    // data['attributes'] = data.selectedAttributes.map(it => it.value)
-    // cWrapper(() =>
-    //     axiosPut(PUT_EMPLOYEE_URL(location.state.id), data)
-    //         .then(() => {
-    //             navigate(EMPLOYEES_PAGE_URL)
-    //
-    //             setAlert({
-    //                 message: 'Employee updated',
-    //                 status: 'success'
-    //             })
-    //         })
-    // )
-  }
+  const {afm} = useUserData()
 
   const onSubmit = (data) => {
-    // if (mode === 'add') {
-    //     createEmployee(data)
-    // } else {
-    //     editEmployee(data)
-    // }
+    cWrapper(() =>
+      axiosPost(CREATE_CAR_URL, {
+        ...data,
+        dealershipAfm: afm
+      })
+        .then(() => {
+          navigate(CARS_PAGE_URL)
+
+          setAlert({
+            message: 'Car created!',
+            status: 'success'
+          })
+        })
+    )
   }
 
   return (
@@ -134,7 +103,7 @@ export default function CreateCarForm() {
           <Form.Label>Price</Form.Label>
           <Form.Control
             type='text'
-            placeholder='Enter number of seats'
+            placeholder='Enter price'
             {...register("price", positiveNumberRules)}
           />
           {errors.price && <small className='text-danger'>{errors.price.message}</small>}
@@ -147,6 +116,16 @@ export default function CreateCarForm() {
             placeholder='Enter car description'
             {...register("description")}
           />
+        </Form.Group>
+
+        <Form.Group className='mt-3'>
+          <Form.Label>Number of Cars</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Enter number of cars'
+            {...register("total", positiveNumberRules)}
+          />
+          {errors.total && <small className='text-danger'>{errors.total.message}</small>}
         </Form.Group>
 
         <Button type='submit' className='btn btn-primary mt-3'>
