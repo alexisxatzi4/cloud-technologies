@@ -1,5 +1,6 @@
 package gr.uom.cloud.technologies.car;
 
+import gr.uom.cloud.technologies.car.dto.GetCarDTO;
 import gr.uom.cloud.technologies.dealership.Dealership;
 import gr.uom.cloud.technologies.car.dto.CreateCarDTO;
 import gr.uom.cloud.technologies.dealership.DealershipRepository;
@@ -8,6 +9,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +46,22 @@ public class CarService {
         return car;
     }
 
-    public List<Car> getAllCars() {
-        return carRepository.findAll();
+    public List<GetCarDTO> getFilteredCars(String make, String model, String fuel, Integer engine,
+                                           Integer seats, Double price, String dealershipAfm) {
+        List<Car> cars = carRepository.filterCars(make, model, fuel, engine, seats, price, dealershipAfm);
+        return cars.stream().map(car -> {
+            GetCarDTO dto = new GetCarDTO();
+            dto.setMake(car.getMake());
+            dto.setModel(car.getModel());
+            dto.setFuel(car.getFuel());
+            dto.setEngine(car.getEngine());
+            dto.setSeats(car.getSeats());
+            dto.setPrice(car.getPrice());
+            dto.setDescription(car.getDescription());
+            dto.setTotal(car.getTotal());
+            dto.setDealershipAfm(car.getDealership().getAfm());
+            return dto;
+        }).collect(Collectors.toList());
+
     }
 }

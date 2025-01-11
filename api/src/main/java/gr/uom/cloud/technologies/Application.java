@@ -46,7 +46,7 @@ public class Application {
 		car1.setFuel("Diesel");
 		car1.setEngine(1400);
 		car1.setSeats(5);
-		car1.setPrice(15.500);
+		car1.setPrice(15500.0);
 		car1.setDescription("Best vehicle");
 		car1.setTotal(19);
 		car1.setDealership(dealership1);
@@ -57,7 +57,7 @@ public class Application {
 		car2.setFuel("Gas");
 		car2.setEngine(1300);
 		car2.setSeats(5);
-		car2.setPrice(12.800);
+		car2.setPrice(12800.0);
 		car2.setDescription("Good choice");
 		car2.setTotal(56);
 		car2.setDealership(dealership1);
@@ -68,7 +68,7 @@ public class Application {
 		car3.setFuel("Gas");
 		car3.setEngine(2000);
 		car3.setSeats(5);
-		car3.setPrice(29.800);
+		car3.setPrice(29800.0);
 		car3.setDescription("Speed car");
 		car3.setTotal(2);
 		car3.setDealership(dealership1);

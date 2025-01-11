@@ -1,6 +1,7 @@
 package gr.uom.cloud.technologies.car;
 
 import gr.uom.cloud.technologies.car.dto.CreateCarDTO;
+import gr.uom.cloud.technologies.car.dto.GetCarDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,15 @@ public class CarController {
     }
 
     @GetMapping
-    public List<Car> getAllCars(){
-        return carService.getAllCars();
+    public List<GetCarDTO> getCars(
+            @RequestParam(required = false) String make,
+            @RequestParam(required = false) String model,
+            @RequestParam(required = false) String fuel,
+            @RequestParam(required = false) Integer engine,
+            @RequestParam(required = false) Integer seats,
+            @RequestParam(required = false) Double price,
+            @RequestParam(required = false) String dealershipAfm
+    ) {
+        return carService.getFilteredCars(make, model, fuel, engine, seats, price, dealershipAfm);
     }
 }
