@@ -113,3 +113,8 @@ ul.navigation-bar li a:hover {
   margin-right: 10px;
   max-width: 200px;
 }
+
+.date-field {
+  margin-right: 10px;
+  width: 250px;
+}

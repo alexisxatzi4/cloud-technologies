@@ -6,13 +6,11 @@ import {axiosGet, axiosPost, axiosPut} from '../../lib/axios';
 import {
   BUY_CAR_URL,
   GET_CAR_URL,
-  GET_CARS_URL,
+  GET_CARS_URL, RESERVE_CAR_URL,
   UPDATE_CAR_TOTAL_URL
 } from '../../lib/url/apiUrlConstants';
-import {Link} from 'react-router-dom';
 import {Button, Form, Modal} from 'react-bootstrap';
 import {useAlert} from '../utils/GlobalAlert';
-import {CREATE_CAR_PAGE_URL} from '../../lib/url/pageUrlConstants';
 import useCatch from '../../hooks/useCatch';
 import {useForm} from "react-hook-form";
 import useUserData from "../../hooks/useUserData";
@@ -25,6 +23,8 @@ export default function CarsTable() {
   const {isCitizen, afm} = useUserData()
   const [updateTotalModal, setUpdateTotalModal] = useState(false);
   const [carToUpdateTotal, setCarToUpdateTotal] = useState(null)
+  const [carToReserve, setCarToReserve] = useState(null)
+  const [reserveCarModal, setReserveCarModal] = useState(false);
 
   const filterData = watch()
 
@@ -118,10 +118,8 @@ export default function CarsTable() {
     return (
       isCitizen ?
         <div className='d-flex'>
-          <Link to={CREATE_CAR_PAGE_URL} state={{id: rowData.id}}>
-            <i className="bi bi-car-front custom-icon mr-3" title='Reserve car for test drive'/>
-          </Link>
-
+          <i className="bi bi-car-front custom-icon" title='Reserve car for test drive'
+             onClick={() => showReserveCarModal(rowData)}/>
           <i className="bi bi-currency-dollar custom-icon ml-3" title='Buy car' onClick={() => buyCar(rowData)}/>
         </div>
         : <div className='d-flex'>
@@ -142,11 +140,48 @@ export default function CarsTable() {
   }, [])
 
   const closeUpdateTotalModal = () => setUpdateTotalModal(false);
+  const closeReserveCarModal = () => setReserveCarModal(false);
 
   const showUpdateTotalModal = (rowData) => {
     setUpdateTotalModal(true)
     setCarToUpdateTotal(rowData.id)
   };
+
+  const showReserveCarModal = (rowData) => {
+    setReserveCarModal(true)
+    setCarToReserve(rowData.id)
+  };
+
+  const reserveCar = () => {
+    cWrapper(() =>
+      axiosPost(
+        RESERVE_CAR_URL(carToReserve),
+        {
+          citizenAfm: afm,
+          reservationDate: getValues().reservationDateTime,
+          reservationTimeInMinutes: getValues().duration,
+        },
+      )
+        .then(() => {
+          axiosGet(GET_CAR_URL(carToReserve))
+            .then((response) => {
+              const data = response.data
+              setTableData(previous => previous.map(it => it.id === data.id ? data : it))
+            })
+
+          setAlert({
+            message: 'Car reserved!',
+            status: 'success'
+          })
+
+        })
+        .finally(() => {
+          setValue('reservationDateTime', null)
+          setValue('duration', null)
+          setReserveCarModal(false)
+        })
+    )
+  }
 
   return (
     tableData ? <div>
@@ -173,6 +208,42 @@ export default function CarsTable() {
             </Button>
           </Modal.Footer>
         </Modal>
+
+        <Modal show={reserveCarModal} onHide={closeReserveCarModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Reserve a Car for test drive</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="date-field mt-2">
+                <Form.Label>Reservation Date & Time</Form.Label>
+                <Form.Control
+                  type="datetime-local"
+                  {...register("reservationDateTime")}
+                />
+              </Form.Group>
+
+              <Form.Group className="date-field mt-3">
+                <Form.Label>Duration</Form.Label>
+                <Form.Control
+                  type="number"
+                  min="1"
+                  placeholder="Enter duration in minutes"
+                  {...register("duration")}
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={closeReserveCarModal}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={reserveCar}>
+              Reserve Car
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
 
         <div className='filters'>
           <h3>Filters</h3>

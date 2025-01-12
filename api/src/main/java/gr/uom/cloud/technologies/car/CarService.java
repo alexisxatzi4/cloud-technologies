@@ -2,9 +2,14 @@ package gr.uom.cloud.technologies.car;
 
 import gr.uom.cloud.technologies.car.dto.GetCarDTO;
 import gr.uom.cloud.technologies.car.dto.UpdateCarTotalRequestDto;
+import gr.uom.cloud.technologies.citizen.Citizen;
+import gr.uom.cloud.technologies.citizen.CitizenRepository;
 import gr.uom.cloud.technologies.dealership.Dealership;
 import gr.uom.cloud.technologies.car.dto.CreateCarDTO;
 import gr.uom.cloud.technologies.dealership.DealershipRepository;
+import gr.uom.cloud.technologies.reservation.Reservation;
+import gr.uom.cloud.technologies.reservation.ReservationRepository;
+import gr.uom.cloud.technologies.reservation.dto.CreateReservationDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +23,8 @@ public class CarService {
 
     private final DealershipRepository dealershipRepository;
     private final CarRepository carRepository;
+    private final ReservationRepository reservationRepository;
+    private final CitizenRepository citizenRepository;
 
     @Transactional
     public void createCar(CreateCarDTO createCarDTO) {
@@ -122,5 +129,39 @@ public class CarService {
         car.setTotal(car.getTotal() - 1);
 
         carRepository.save(car);
+    }
+
+    public Car carExists(Long carId) {
+        Car car = carRepository.findById(carId)
+                .orElseThrow(() -> new RuntimeException("No car found with id " + carId));
+
+        if (car.getTotal() <= 0) {
+            throw new RuntimeException("No available car for reservation");
+        }
+
+        return car;
+    }
+
+    public Reservation fillReservation(Long id, CreateReservationDTO createReservationDTO) {
+        Reservation reservation = new Reservation();
+        reservation.setReservationDate(createReservationDTO.getReservationDate());
+        reservation.setReservationTimeInMinutes(createReservationDTO.getReservationTimeInMinutes());
+
+        Citizen citizen = citizenRepository.findByAfm(createReservationDTO.getCitizenAfm());
+
+        if (citizen == null) {
+            throw new RuntimeException("Citizen with AFM " + createReservationDTO.getCitizenAfm() + " not found");
+        }
+
+        reservation.setCitizen(citizen);
+        Car car = carExists(id);
+        reservation.setCar(car);
+        return reservation;
+    }
+
+    public void createReservation(Long id, CreateReservationDTO createReservationDTO) {
+        Reservation reservation = fillReservation(id, createReservationDTO);
+
+        reservationRepository.save(reservation);
     }
 }

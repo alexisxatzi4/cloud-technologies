@@ -3,6 +3,7 @@ package gr.uom.cloud.technologies.car;
 import gr.uom.cloud.technologies.car.dto.CreateCarDTO;
 import gr.uom.cloud.technologies.car.dto.GetCarDTO;
 import gr.uom.cloud.technologies.car.dto.UpdateCarTotalRequestDto;
+import gr.uom.cloud.technologies.reservation.dto.CreateReservationDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -59,5 +60,13 @@ public class CarController {
         carService.buyCar(id);
 
         return ResponseEntity.ok("Car bought!");
+    }
+
+    @PostMapping("{id}/reserve")
+    public ResponseEntity<String> createReservation(@PathVariable Long id,
+                                                    @RequestBody CreateReservationDTO createReservationDTO) {
+        carService.createReservation(id, createReservationDTO);
+
+        return ResponseEntity.ok("Car reserved!");
     }
 }
