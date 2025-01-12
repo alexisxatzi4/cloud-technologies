@@ -15,5 +15,5 @@ public class GetCarDTO {
     private Double price;
     private String description;
     private Integer total;
-    private String dealershipAfm;
+    private String dealershipName;
 }

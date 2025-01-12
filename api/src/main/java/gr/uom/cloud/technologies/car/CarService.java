@@ -49,6 +49,11 @@ public class CarService {
 
     public List<GetCarDTO> getFilteredCars(String make, String model, String fuel, Integer engine,
                                            Integer seats, Double price, String dealershipAfm) {
+
+        make = sanitizeField(make);
+        model = sanitizeField(model);
+        fuel = sanitizeField(fuel);
+
         List<Car> cars = carRepository.filterCars(make, model, fuel, engine, seats, price, dealershipAfm);
 
         return cars.stream()
@@ -62,8 +67,12 @@ public class CarService {
                         car.getPrice(),
                         car.getDescription(),
                         car.getTotal(),
-                        car.getDealership().getAfm()
+                        car.getDealership().getName()
                 ))
                 .toList();
+    }
+
+    private String sanitizeField(String field) {
+        return (field == null || field.isBlank()) ? null : field.trim();
     }
 }

@@ -18,7 +18,6 @@ export default function Header() {
     navigate(LOGIN_PAGE_URL);
   };
 
-  console.log('user ', user)
 
   return (
     <header className="header">

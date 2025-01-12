@@ -101,3 +101,15 @@ ul.navigation-bar li a:hover {
   height: 45px;
 }
 
+.filters {
+  margin: 20px 0;
+}
+
+.filters-wrapper {
+  display: flex;
+}
+
+.filter-field {
+  margin-right: 10px;
+  max-width: 200px;
+}
