@@ -1,9 +1,7 @@
 import {Link} from "react-router-dom";
 import {
-  EMPLOYEES_PAGE_URL,
-  ATTRIBUTES_PAGE_URL,
   LOGIN_PAGE_URL,
-  REGISTER_PAGE_URL, CARS_PAGE_URL
+  REGISTER_PAGE_URL, CARS_PAGE_URL, RESERVATIONS_PAGE_URL
 } from "../../lib/url/pageUrlConstants";
 import {useNavigate} from "react-router-dom";
 import useUserData from "../../hooks/useUserData";
@@ -12,7 +10,7 @@ import {removeItem} from "../../lib/storage";
 export default function Header() {
   const navigate = useNavigate();
 
-  const {user} = useUserData()
+  const {user, isCitizen} = useUserData()
   const handleLogout = () => {
     removeItem('user')
     navigate(LOGIN_PAGE_URL);
@@ -25,6 +23,9 @@ export default function Header() {
       <ul className="navigation-bar">
         {user && <div className="left-nav">
           <li><Link to={CARS_PAGE_URL}>Cars</Link></li>
+          {
+            isCitizen && <li><Link to={RESERVATIONS_PAGE_URL}>My Reservations</Link></li>
+          }
         </div>}
 
 
