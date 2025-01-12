@@ -29,7 +29,7 @@ Example:
 
 1. [User](#user)
 2. [Car](#car)
-3. [Venue](#venue)
+3. [Reservation](#reservation)
 
 ## Api Requests
 
@@ -201,57 +201,36 @@ This request is used to reserve with a specific Id.
 
 ---
 
-## Venue
+## Reservation
 
-This collection contains all the requests regarding a venue.
+This collection contains all the requests regarding a reservation.
 
-**Get venue**
+**Get reservations**
 
-This request is used to retrieve a venue by the provided identifier.
+This request is used to retrieve reservations.
 
-| GET            | /api/venue/{ID}                            |
-| -------------- | ------------------------------------------ |
-| **Parameters** |                                            |
-| *ID*           | <u>Path variable</u>                       |
-|                | The identifier of the venue to retrieve.   |
-| **Responses**  |                                            |
-| VenueDTO       | {id: Int, title: String, address: String}  |
+| GET                      | /reservations                                                                                              |
+|--------------------------|------------------------------------------------------------------------------------------------------------|
+| **Parameters**           |                                                                                                            |
+| *carId*                  | <u>Request parameter</u>                                                                                   |
+|                          | The identifier of the car to retrieve reservations.                                                        |
+| **Responses**            |                                                                                                            |
+| List\<GetReservationDTO> | {id: Long, citizenAfm: String, carId: Long, reservationDate: LocalDateTime, reservationTimeInMinutes: Int} |
 
-| [:book: Contents](#contents) | [:earth_africa: Venue](#venue) |
-
----
-
-**Get Venues**
-
-This request is used to retrieve all venues.
-
-| GET             | /api/venues                                |
-| --------------- | ------------------------------------------ |
-| **Parameters**  |                                            |
-| *page*          | <u>Request parameter</u>                   |
-|                 | The index of the page to return. Optional  |
-| *size*          | <u>Request parameter</u>                   |
-|                 | The size of the page. Optional             |
-| **Responses**   |                                            |
-| Page\<VenueDTO\>| {id: Int, title: String, address: String}  |
-
-| [:book: Contents](#contents) | [:earth_africa: Venue](#venue) |
+| [:book: Contents](#contents) |
 
 ---
-**Get Productions By Venue Id**
 
-This request is used to retrieve all productions located in the given venue.
+**Get Reservations by Citizen Afm**
 
-| GET             | /api/venues/ID/productions                 |
-| --------------- | ------------------------------------------ |
-| **Parameters**  |                                            |
-| *ID*            | <u>Path variable</u>                       |
-|                 | The identifier of the venue to retrieve.   |
-| *page*          | <u>Request parameter</u>                   |
-|                 | The index of the page to return. Optional  |
-| *size*          | <u>Request parameter</u>                   |
-|                 | The size of the page. Optional             |
-| **Responses**   |                                            |
-| Page\<ProductionDTO\> | {productionId: Int, title: String, url: String, producer: String<br />mediaURL: String, duration: String, description: String, role: String} |
+This request is used to retrieve all reservations with a specific citizen afm.
 
-| [:book: Contents](#contents) | [:earth_africa: Venue](#venue) |
+| GET                          | /api/citizens/citizenAfm                                                                                                           |
+|------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| **Parameters**               |                                                                                                                                    |
+| *citizenAfm*                 | <u>Path variable</u>                                                                                                               |
+|                              | The identifier of the citizen to retrieve reservations.                                                                            |
+| **Responses**                |                                                                                                                                    |
+| List\<ReservationCitizenDto> | {dealershipName: String, make: String, model: String, fuel: String, reservationDate: LocalDateTime, reservationTimeInMinutes: Int} |
+
+| [:book: Contents](#contents) | 
