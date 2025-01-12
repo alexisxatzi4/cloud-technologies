@@ -15,7 +15,7 @@ export default function CarsTable() {
   const [tableData, setTableData] = useState(null)
   const {setAlert} = useAlert()
   const {cWrapper} = useCatch()
-  const {register,watch, getValues, formState: {errors}} = useForm();
+  const {register,setValue,watch, getValues, formState: {errors}} = useForm();
 
   const filterData = watch()
 
@@ -41,6 +41,20 @@ export default function CarsTable() {
 
       })
     }
+  }
+
+  const clearFilters = () => {
+    setValue('make', null)
+    setValue('model', null)
+    setValue('fuel', null)
+
+    axiosGet(GET_CARS_URL)
+      .then(response => {
+        const data = response.data;
+        setTableData(data)
+      })
+
+
   }
 
   const handleDelete = (rowData) => {
@@ -102,6 +116,9 @@ export default function CarsTable() {
               Filter Cars
             </Button>
 
+            <Button variant="link" onClick={clearFilters}>
+              Clear filters
+            </Button>
           </div>
         </div>
 
