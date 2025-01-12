@@ -46,10 +46,8 @@ This request is used to register a dealership.
 | **Parameters**          |                                           |
 | *RegisterDealershipDto* | <u>Request Body</u>                       |
 |                         | The fields of the dealership to register. |
-| **Responses**           |                                           |
+| **Response**            |                                           |
 | String                  | Dealership registered successfully.       |
-
-| [:book: Contents](#contents) |
 
 ---
 
@@ -62,10 +60,8 @@ This request is used to register a citizen.
 | **Parameters**       |                                        |
 | *RegisterCitizenDto* | <u>Request Body</u>                    |
 |                      | The fields of the citizen to register. |
-| **Responses**        |                                        |
+| **Response**         |                                        |
 | String               | Citizen registered successfully.       |
-
-| [:book: Contents](#contents) |
 
 ---
 
@@ -78,10 +74,8 @@ This request is used to login a user.
 | **Parameters**   |                                                 |
 | *LoginDto*       | <u>Request Body</u>                             |
 |                  | The role provided to filter the results         |
-| **Responses**    |                                                 |
+| **Response**     |                                                 |
 | LoginResponseDto | {afm: String, name: String, isCitizen: Boolean} |
-
-| [:book: Contents](#contents) |
 
 ---
 
@@ -98,10 +92,8 @@ This request is used to create a car.
 | **Parameters** |                                   |
 | *CreateCarDTO* | <u>Request Body</u>               |
 |                | {email: String, password: String} |
-| **Responses**  |                                   |
+| **Response**   |                                   |
 | String         | Car created successfully          |
-
-| [:book: Contents](#contents) |
 
 ---
 
@@ -126,10 +118,8 @@ This request is used to retrieve all cars with or without filters.
 |                  | The price of the car                                                                                                                                  |
 | *dealershipAfm*  | <u>Request parameter</u>                                                                                                                              |
 |                  | The dealership of the car                                                                                                                             |
-| **Responses**    |                                                                                                                                                       |
+| **Response**     |                                                                                                                                                       |
 | List\<GetCarDTO> | {id: Long, make: String, model: String, fuel: String<br />engine: Int, seats: Int, price: Double, description: String, total: Int,dealership: String} |
-
-| [:book: Contents](#contents) |
 
 ---
 
@@ -142,10 +132,8 @@ This request is used to retrieve a car with a specific Id.
 | **Parameters** |                                                                                                                                                       |
 | *ID*           | <u>Path variable</u>                                                                                                                                  |
 |                | The identifier of the car to retrieve.                                                                                                                |
-| **Responses**  |                                                                                                                                                       |
+| **Response**   |                                                                                                                                                       |
 | GetCarDTO      | {id: Long, make: String, model: String, fuel: String<br />engine: Int, seats: Int, price: Double, description: String, total: Int,dealership: String} |
-
-| [:book: Contents](#contents) |
 
 ---
 
@@ -160,10 +148,9 @@ This request is used to update a cars total field with a specific Id.
 |                            | The identifier of the car to retrieve. |
 | *UpdateCarTotalRequestDto* | <u>Request Body</u>                    |
 |                            | {total: Int, dealership: String}       |
-| **Responses**              |                                        |
+| **Response**               |                                        |
 | String                     | Car total updated successfully         |
 
-| [:book: Contents](#contents) |
 
 ---
 
@@ -176,10 +163,9 @@ This request is used to reduce a car 's total field by one with a specific Id.
 | **Parameters** |                                        |
 | *ID*           | <u>Path variable</u>                   |
 |                | The identifier of the car to retrieve. |
-| **Responses**  |                                        |
+| **Response**   |                                        |
 | String         | Car bought!                            |
 
-| [:book: Contents](#contents) |
 
 ---
 
@@ -187,17 +173,16 @@ This request is used to reduce a car 's total field by one with a specific Id.
 
 This request is used to reserve with a specific Id.
 
-| POST                   | /cars/ID/buy                                                                           |
-|------------------------|----------------------------------------------------------------------------------------|
-| **Parameters**         |                                                                                        |
-| *ID*                   | <u>Path variable</u>                                                                   |
-|                        | The identifier of the car to retrieve.                                                 |
-| *CreateReservationDTO* | <u>Request Body</u>                                                                    |
-|                        | {citizenAfm: String, reservationDate: LocalDateTime, reservationTimeInMinutes: Int}    |
-| **Responses**          |                                                                                        |
-| String                 | Car reserved!                                                                          |
+| POST                   | /cars/ID/buy                                                                        |
+|------------------------|-------------------------------------------------------------------------------------|
+| **Parameters**         |                                                                                     |
+| *ID*                   | <u>Path variable</u>                                                                |
+|                        | The identifier of the car to retrieve.                                              |
+| *CreateReservationDTO* | <u>Request Body</u>                                                                 |
+|                        | {citizenAfm: String, reservationDate: LocalDateTime, reservationTimeInMinutes: Int} |
+| **Response**           |                                                                                     |
+| String                 | Car reserved!                                                                       |
 
-| [:book: Contents](#contents) |
 
 ---
 
@@ -214,10 +199,9 @@ This request is used to retrieve reservations.
 | **Parameters**           |                                                                                                            |
 | *carId*                  | <u>Request parameter</u>                                                                                   |
 |                          | The identifier of the car to retrieve reservations.                                                        |
-| **Responses**            |                                                                                                            |
+| **Response**             |                                                                                                            |
 | List\<GetReservationDTO> | {id: Long, citizenAfm: String, carId: Long, reservationDate: LocalDateTime, reservationTimeInMinutes: Int} |
 
-| [:book: Contents](#contents) |
 
 ---
 
@@ -225,12 +209,11 @@ This request is used to retrieve reservations.
 
 This request is used to retrieve all reservations with a specific citizen afm.
 
-| GET                          | /api/citizens/citizenAfm                                                                                                           |
+| GET                          | /citizens/citizenAfm                                                                                                               |
 |------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
 | **Parameters**               |                                                                                                                                    |
 | *citizenAfm*                 | <u>Path variable</u>                                                                                                               |
 |                              | The identifier of the citizen to retrieve reservations.                                                                            |
-| **Responses**                |                                                                                                                                    |
+| **Response**                 |                                                                                                                                    |
 | List\<ReservationCitizenDto> | {dealershipName: String, make: String, model: String, fuel: String, reservationDate: LocalDateTime, reservationTimeInMinutes: Int} |
 
-| [:book: Contents](#contents) | 
