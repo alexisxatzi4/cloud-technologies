@@ -53,4 +53,11 @@ public class CarController {
 
         return ResponseEntity.ok("Car total updated successfully");
     }
+
+    @PostMapping("{id}/buy")
+    public ResponseEntity<String> buyCar(@PathVariable Long id) {
+        carService.buyCar(id);
+
+        return ResponseEntity.ok("Car bought!");
+    }
 }

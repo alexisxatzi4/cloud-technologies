@@ -8,7 +8,6 @@ import gr.uom.cloud.technologies.dealership.DealershipRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -49,6 +48,7 @@ public class CarService {
         return car;
     }
 
+    @Transactional
     public List<GetCarDTO> getFilteredCars(String make, String model, String fuel, Integer engine,
                                            Integer seats, Double price, String dealershipAfm) {
 
@@ -96,6 +96,7 @@ public class CarService {
         );
     }
 
+    @Transactional
     public void updateCarTotal(Long id, UpdateCarTotalRequestDto request) {
         Car car = carRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Car with id " + id + " not found"));
@@ -105,6 +106,20 @@ public class CarService {
         }
 
         car.setTotal(request.getTotal());
+
+        carRepository.save(car);
+    }
+
+    @Transactional
+    public void buyCar(Long id) {
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Car with id " + id + " not found"));
+
+        if (car.getTotal() <= 0) {
+            throw new RuntimeException("There are no available cars to buy");
+        }
+
+        car.setTotal(car.getTotal() - 1);
 
         carRepository.save(car);
     }

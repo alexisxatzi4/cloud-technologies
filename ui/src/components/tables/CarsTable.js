@@ -2,8 +2,13 @@ import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import {useState, useEffect} from 'react';
 import LoadingSpinner from '../utils/LoadingSpinner';
-import {axiosGet, axiosPut} from '../../lib/axios';
-import {GET_CAR_URL, GET_CARS_URL, UPDATE_CAR_TOTAL_URL} from '../../lib/url/apiUrlConstants';
+import {axiosGet, axiosPost, axiosPut} from '../../lib/axios';
+import {
+  BUY_CAR_URL,
+  GET_CAR_URL,
+  GET_CARS_URL,
+  UPDATE_CAR_TOTAL_URL
+} from '../../lib/url/apiUrlConstants';
 import {Link} from 'react-router-dom';
 import {Button, Form, Modal} from 'react-bootstrap';
 import {useAlert} from '../utils/GlobalAlert';
@@ -16,7 +21,7 @@ export default function CarsTable() {
   const [tableData, setTableData] = useState(null)
   const {setAlert} = useAlert()
   const {cWrapper} = useCatch()
-  const {register, setValue, watch, getValues, formState: {errors}} = useForm();
+  const {register, setValue, watch, getValues} = useForm();
   const {isCitizen, afm} = useUserData()
   const [updateTotalModal, setUpdateTotalModal] = useState(false);
   const [carToUpdateTotal, setCarToUpdateTotal] = useState(null)
@@ -61,16 +66,25 @@ export default function CarsTable() {
 
   const buyCar = (rowData) => {
 
-    setAlert({
-      message: 'Congratulations! Car bought.',
-      status: 'success'
-    })
+    cWrapper(() =>
+      axiosPost(BUY_CAR_URL(rowData.id))
+        .then(() => {
+          axiosGet(GET_CAR_URL(rowData.id))
+            .then((response) => {
+              const data = response.data
+              setTableData((previous) =>
+                previous.map((it) => (it.id === data.id ? {...it, ...data} : it))
+              );
+              setAlert({
+                message: 'Congratulations! Car bought.',
+                status: 'success'
+              })
+            })
+        })
+    )
   }
 
   const updateCarTotal = () => {
-
-    console.log(getValues().numberOfCars)
-    console.log(carToUpdateTotal)
 
     cWrapper(() =>
       axiosPut(
