@@ -75,4 +75,22 @@ public class CarService {
     private String sanitizeField(String field) {
         return (field == null || field.isBlank()) ? null : field.trim();
     }
+
+    public GetCarDTO getCar(Long id) {
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Car with id " + id + " not found"));
+
+        return new GetCarDTO(
+                car.getId(),
+                car.getMake(),
+                car.getModel(),
+                car.getFuel(),
+                car.getEngine(),
+                car.getSeats(),
+                car.getPrice(),
+                car.getDescription(),
+                car.getTotal(),
+                car.getDealership().getName()
+        );
+    }
 }
