@@ -5,7 +5,7 @@ import CarsTable from "./tables/CarsTable";
 import useUserData from "../hooks/useUserData";
 
 export default function CarsPage() {
-  const {user, isDealership} = useUserData()
+  const {user, isCitizen} = useUserData()
 
   return (
     <div>
@@ -14,7 +14,7 @@ export default function CarsPage() {
       {
         user ?
           <>
-            {isDealership && <Link className='mb-3' to={CREATE_CAR_PAGE_URL}>
+            {!isCitizen && <Link className='mb-3' to={CREATE_CAR_PAGE_URL}>
               <Button>Create Car</Button>
             </Link>}
             <CarsTable/>

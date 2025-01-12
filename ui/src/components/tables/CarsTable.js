@@ -2,20 +2,24 @@ import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import {useState, useEffect} from 'react';
 import LoadingSpinner from '../utils/LoadingSpinner';
-import {axiosGet} from '../../lib/axios';
-import {GET_CARS_URL} from '../../lib/url/apiUrlConstants';
+import {axiosGet, axiosPut} from '../../lib/axios';
+import {GET_CAR_URL, GET_CARS_URL, UPDATE_CAR_TOTAL_URL} from '../../lib/url/apiUrlConstants';
 import {Link} from 'react-router-dom';
-import {Button, Form} from 'react-bootstrap';
+import {Button, Form, Modal} from 'react-bootstrap';
 import {useAlert} from '../utils/GlobalAlert';
 import {CREATE_CAR_PAGE_URL} from '../../lib/url/pageUrlConstants';
 import useCatch from '../../hooks/useCatch';
 import {useForm} from "react-hook-form";
+import useUserData from "../../hooks/useUserData";
 
 export default function CarsTable() {
   const [tableData, setTableData] = useState(null)
   const {setAlert} = useAlert()
   const {cWrapper} = useCatch()
-  const {register,setValue,watch, getValues, formState: {errors}} = useForm();
+  const {register, setValue, watch, getValues, formState: {errors}} = useForm();
+  const {isCitizen, afm} = useUserData()
+  const [updateTotalModal, setUpdateTotalModal] = useState(false);
+  const [carToUpdateTotal, setCarToUpdateTotal] = useState(null)
 
   const filterData = watch()
 
@@ -53,24 +57,63 @@ export default function CarsTable() {
         const data = response.data;
         setTableData(data)
       })
-
-
   }
 
-  const handleDelete = (rowData) => {
+  const buyCar = (rowData) => {
 
+    setAlert({
+      message: 'Congratulations! Car bought.',
+      status: 'success'
+    })
+  }
+
+  const updateCarTotal = () => {
+
+    console.log(getValues().numberOfCars)
+    console.log(carToUpdateTotal)
+
+    cWrapper(() =>
+      axiosPut(
+        UPDATE_CAR_TOTAL_URL(carToUpdateTotal),
+        {
+          total: getValues().numberOfCars,
+          dealershipAfm: afm,
+        },
+      )
+        .then(() => {
+          axiosGet(GET_CAR_URL(carToUpdateTotal))
+            .then((response) => {
+              const data = response.data
+              setTableData(previous => previous.map(it => it.id === data.id ? data : it))
+            })
+
+          setAlert({
+            message: 'Car total updated!',
+            status: 'success'
+          })
+
+        })
+        .finally(() => {
+          setValue('numberOfCars', null)
+          setUpdateTotalModal(false)
+        })
+    )
   }
 
   const actionsColumnBody = (rowData) => {
     return (
-      <>
-        <Link to={CREATE_CAR_PAGE_URL} state={{id: rowData.id}}>
-          <i className="bi bi-pencil custom-icon mr-3" title='Edit'/>
-        </Link>
+      isCitizen ?
+        <div className='d-flex'>
+          <Link to={CREATE_CAR_PAGE_URL} state={{id: rowData.id}}>
+            <i className="bi bi-car-front custom-icon mr-3" title='Reserve car for test drive'/>
+          </Link>
 
-        <i className="bi bi-trash custom-icon mr-3" title='Delete' onClick={() => handleDelete(rowData)}/>
-      </>
-
+          <i className="bi bi-currency-dollar custom-icon ml-3" title='Buy car' onClick={() => buyCar(rowData)}/>
+        </div>
+        : <div className='d-flex'>
+          <i className="bi bi-plus-square custom-icon ml-3" title='Update total'
+             onClick={() => showUpdateTotalModal(rowData)}/>
+        </div>
     )
   }
 
@@ -82,11 +125,41 @@ export default function CarsTable() {
           setTableData(data)
         })
     )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const closeUpdateTotalModal = () => setUpdateTotalModal(false);
+
+  const showUpdateTotalModal = (rowData) => {
+    setUpdateTotalModal(true)
+    setCarToUpdateTotal(rowData.id)
+  };
 
   return (
     tableData ? <div>
+        <Modal show={updateTotalModal} onHide={closeUpdateTotalModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Update Car Total</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Insert the number of cars
+            <Form.Group className='filter-field mt-2'>
+              <Form.Control
+                type='text'
+                placeholder='# of cars'
+                {...register("numberOfCars")}
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={closeUpdateTotalModal}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={updateCarTotal}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
         <div className='filters'>
           <h3>Filters</h3>
           <div className='filters-wrapper'>

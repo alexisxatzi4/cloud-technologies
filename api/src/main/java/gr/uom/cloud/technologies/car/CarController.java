@@ -2,6 +2,7 @@ package gr.uom.cloud.technologies.car;
 
 import gr.uom.cloud.technologies.car.dto.CreateCarDTO;
 import gr.uom.cloud.technologies.car.dto.GetCarDTO;
+import gr.uom.cloud.technologies.car.dto.UpdateCarTotalRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,5 +44,13 @@ public class CarController {
         GetCarDTO car = carService.getCar(id);
 
         return ResponseEntity.ok(car);
+    }
+
+    @PutMapping("{id}/total")
+    public ResponseEntity<String> updateCarTotal(@PathVariable Long id,
+                                                 @RequestBody UpdateCarTotalRequestDto request) {
+        carService.updateCarTotal(id, request);
+
+        return ResponseEntity.ok("Car total updated successfully");
     }
 }

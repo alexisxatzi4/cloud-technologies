@@ -34,7 +34,9 @@ export const axiosPost = async (url, data) => {
 
 
 export const axiosPut = async (url, data) => {
-  return await api.put(url, data)
+  return await api.put(url, data, {
+    "Content-Type": "application/json",
+  })
     .catch((error) => {
       if (!error.response) {
         error.errorMessage = 'Something went wrong. Please contact a System Administrator';

@@ -1,12 +1,14 @@
 package gr.uom.cloud.technologies.car;
 
 import gr.uom.cloud.technologies.car.dto.GetCarDTO;
+import gr.uom.cloud.technologies.car.dto.UpdateCarTotalRequestDto;
 import gr.uom.cloud.technologies.dealership.Dealership;
 import gr.uom.cloud.technologies.car.dto.CreateCarDTO;
 import gr.uom.cloud.technologies.dealership.DealershipRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -92,5 +94,18 @@ public class CarService {
                 car.getTotal(),
                 car.getDealership().getName()
         );
+    }
+
+    public void updateCarTotal(Long id, UpdateCarTotalRequestDto request) {
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Car with id " + id + " not found"));
+
+        if (!car.getDealership().getAfm().equals(request.getDealershipAfm())) {
+            throw new RuntimeException("You can only update the total from cars from your dealership");
+        }
+
+        car.setTotal(request.getTotal());
+
+        carRepository.save(car);
     }
 }
