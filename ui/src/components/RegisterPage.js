@@ -66,7 +66,7 @@ export default function RegisterPage() {
         email: data.email,
         afm: data.afm,
         password: data.password,
-        name: data.name,
+        name: data.dealershipName,
         owner: data.owner,
       })
         .then(() => {
