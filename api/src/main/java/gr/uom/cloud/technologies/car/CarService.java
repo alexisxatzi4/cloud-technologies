@@ -131,10 +131,10 @@ public class CarService {
         carRepository.save(car);
     }
 
-    public Reservation fillReservation(Long id, CreateReservationDTO createReservationDTO) {
-        Citizen citizen = citizenRepository.findByAfm(createReservationDTO.getCitizenAfm());
+    public Reservation fillReservation(Long id, CreateReservationDTO request) {
+        Citizen citizen = citizenRepository.findByAfm(request.getCitizenAfm());
         if (citizen == null) {
-            throw new RuntimeException("Citizen with AFM " + createReservationDTO.getCitizenAfm() + " not found");
+            throw new RuntimeException("Citizen with AFM " + request.getCitizenAfm() + " not found");
         }
 
         Car car = carRepository.findById(id)
@@ -143,9 +143,18 @@ public class CarService {
             throw new RuntimeException("No available car for reservation");
         }
 
+        List<Reservation> reservations = reservationRepository.findByCarAndReservationDateBetween(car,
+                request.getReservationDate(),
+                request.getReservationDate().plusMinutes(request.getReservationTimeInMinutes())
+        );
+        if (!reservations.isEmpty()) {
+            throw new RuntimeException("There is already a reservation for the selected timeframe");
+        }
+
+
         Reservation reservation = new Reservation();
-        reservation.setReservationDate(createReservationDTO.getReservationDate());
-        reservation.setReservationTimeInMinutes(createReservationDTO.getReservationTimeInMinutes());
+        reservation.setReservationDate(request.getReservationDate());
+        reservation.setReservationTimeInMinutes(request.getReservationTimeInMinutes());
         reservation.setCitizen(citizen);
         reservation.setCar(car);
 
