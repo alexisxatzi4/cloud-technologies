@@ -131,31 +131,24 @@ public class CarService {
         carRepository.save(car);
     }
 
-    public Car getCarById(Long carId) {
-        Car car = carRepository.findById(carId)
-                .orElseThrow(() -> new RuntimeException("No car found with id " + carId));
-
-        if (car.getTotal() <= 0) {
-            throw new RuntimeException("No available car for reservation");
-        }
-
-        return car;
-    }
-
     public Reservation fillReservation(Long id, CreateReservationDTO createReservationDTO) {
-        Reservation reservation = new Reservation();
-        reservation.setReservationDate(createReservationDTO.getReservationDate());
-        reservation.setReservationTimeInMinutes(createReservationDTO.getReservationTimeInMinutes());
-
         Citizen citizen = citizenRepository.findByAfm(createReservationDTO.getCitizenAfm());
-
         if (citizen == null) {
             throw new RuntimeException("Citizen with AFM " + createReservationDTO.getCitizenAfm() + " not found");
         }
 
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No car found with id " + id));
+        if (car.getTotal() <= 0) {
+            throw new RuntimeException("No available car for reservation");
+        }
+
+        Reservation reservation = new Reservation();
+        reservation.setReservationDate(createReservationDTO.getReservationDate());
+        reservation.setReservationTimeInMinutes(createReservationDTO.getReservationTimeInMinutes());
         reservation.setCitizen(citizen);
-        Car car = getCarById(id);
         reservation.setCar(car);
+
         return reservation;
     }
 
