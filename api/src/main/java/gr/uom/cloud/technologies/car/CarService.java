@@ -152,6 +152,7 @@ public class CarService {
         return reservation;
     }
 
+    @Transactional
     public void createReservation(Long id, CreateReservationDTO createReservationDTO) {
         Reservation reservation = fillReservation(id, createReservationDTO);
 
