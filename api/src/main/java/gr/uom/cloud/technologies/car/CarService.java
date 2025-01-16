@@ -131,7 +131,7 @@ public class CarService {
         carRepository.save(car);
     }
 
-    public Car carExists(Long carId) {
+    public Car getCarById(Long carId) {
         Car car = carRepository.findById(carId)
                 .orElseThrow(() -> new RuntimeException("No car found with id " + carId));
 
@@ -154,7 +154,7 @@ public class CarService {
         }
 
         reservation.setCitizen(citizen);
-        Car car = carExists(id);
+        Car car = getCarById(id);
         reservation.setCar(car);
         return reservation;
     }
