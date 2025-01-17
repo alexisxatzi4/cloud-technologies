@@ -1,35 +1,25 @@
 # Documentation for Cloud Technologies API
 
-This is the documentation for semester work about the cloud services development class. It is about the creation of an API concerning data related to cars. The API was built using the Spring Framework.
+This is the documentation for the assignment about the Cloud Services Development class.
+It is about the creation of an API concerning data related to cars. 
+The API was built using the Spring Framework.
+The frontend was building using the React Framework.
+
+The video presentation can be found here: https://www.youtube.com/watch?v=gwWfgvcjpL8
 
 ------
 
-## Api Response
-
-All responses from the server are being encapsulated within the ApiResponse container object.
-It consists of three fields: `data`, `errors` and `status`.
-
-The `data` field contains the requested data.
-The `errors` field contains any possible errors occurred during a request. When `errors` is empty the request was successful.
-The `status` field contains the HTTP status code converted to String.
-
-Example:
-
-```json
-{
-    "data" : "Some data",
-    "errors" : null,
-    "status" : "OK"
-}
-```
+1. [Error Handling](#error-handling)
+1. [API Requests](#api-requests)
+    1. [User](#user)
+    2. [Car](#car)
+    3. [Reservation](#reservation)
 
 
+## Error Handling
 
-## Contents
-
-1. [User](#user)
-2. [Car](#car)
-3. [Reservation](#reservation)
+All `RuntimeException` that are thrown are caught by the `RestExceptionHandler.java`, which is a `@ControllerAdvice`.
+Then API responds with a `400` http status code and the message of the exception is returned in the response body.
 
 ## Api Requests
 
